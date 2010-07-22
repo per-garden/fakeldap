@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe FakeLDAP::Server do
   before :all do
-    @port = rand(1000) + 1000
+    @port = 1389
 
     @server = FakeLDAP::Server.new(:port => @port)
     @server.run_tcpserver
