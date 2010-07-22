@@ -31,8 +31,15 @@ module FakeLDAP
     end
 
     def simple_bind(version, dn, password)
-      raise LDAP::ResultError::InappropriateAuthentication, "This server does not support anonymous bind" unless dn
-      raise LDAP::ResultError::InvalidCredentials, "Invalid credentials" unless @server.valid_credentials?(dn, password)
+      unless dn
+        raise LDAP::ResultError::InappropriateAuthentication,
+          "This server does not support anonymous bind"
+      end
+
+      unless @server.valid_credentials?(dn, password)
+        raise LDAP::ResultError::InvalidCredentials,
+          "Invalid credentials"
+      end
     end
   end
 end
