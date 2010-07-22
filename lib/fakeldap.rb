@@ -4,7 +4,16 @@ require 'ldap/server'
 module FakeLDAP
   class Server < LDAP::Server
     def initialize(options={})
+      @users = {}
       super(default_options.merge(options))
+    end
+
+    def add_user(user, pass)
+      @users[user] = pass
+    end
+
+    def valid_credentials?(user, pass)
+      @users.has_key?(user) && @users[user] == pass
     end
 
     def default_options
@@ -22,8 +31,8 @@ module FakeLDAP
     end
 
     def simple_bind(version, dn, password)
-      puts "simple_bind: #{version}, #{dn}, #{password}"
-      super(version, dn, password)
+      raise LDAP::ResultError::InappropriateAuthentication, "This server does not support anonymous bind" unless dn
+      raise LDAP::ResultError::InvalidCredentials, "Invalid credentials" unless @server.valid_credentials?(dn, password)
     end
 
     def search(basedn, scope, deref, filter);               raise "not implemented"; end
