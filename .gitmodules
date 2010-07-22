@@ -1,0 +1,3 @@
+[submodule "vendor/ruby-ldapserver"]
+	path = vendor/ruby-ldapserver
+	url = file:///Users/aanand/src/ruby-ldapserver
