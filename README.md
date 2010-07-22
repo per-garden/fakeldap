@@ -1,4 +1,4 @@
-`gem install fakeldap`
+Install: `gem install fakeldap`
 
 Only supports bind operations for now.
 
