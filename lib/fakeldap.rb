@@ -16,6 +16,15 @@ module FakeLDAP
       @users.has_key?(user) && @users[user] == pass
     end
 
+    def find_users(basedn, filter)
+      basedn_regex = /#{Regexp.escape(basedn)}$/
+      filter_regex = /^#{filter[1]}=#{filter[3]}$/
+
+      @users.keys.select { |dn|
+        dn =~ basedn_regex && dn.split(",").grep(filter_regex).any?
+      }
+    end
+
     def default_options
       {
         :operation_class => ::FakeLDAP::Operation,
@@ -39,6 +48,17 @@ module FakeLDAP
       unless @server.valid_credentials?(dn, password)
         raise LDAP::ResultError::InvalidCredentials,
           "Invalid credentials"
+      end
+    end
+
+    def search(basedn, scope, deref, filter, attrs=nil)
+      unless filter.first == :eq
+        raise LDAP::ResultError::UnwillingToPerform,
+          "Only equality matches are supported"
+      end
+
+      @server.find_users(basedn, filter).each do |dn|
+        send_SearchResultEntry(dn, {})
       end
     end
   end
