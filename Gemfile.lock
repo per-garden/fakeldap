@@ -1,10 +1,23 @@
+PATH
+  remote: .
+  specs:
+    fakeldap (0.1)
+      net-ldap (~> 0)
+      ruby-ldapserver (~> 0.5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    ruby-ldapserver (0.5.1)
+    net-ldap (0.13.0)
+    rspec (0.9.4)
+    ruby-ldapserver (0.5.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  ruby-ldapserver (~> 0.5.0)
+  fakeldap!
+  rspec (~> 0)
+
+BUNDLED WITH
+   1.11.2
