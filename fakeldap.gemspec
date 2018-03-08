@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.description = "Supports: Admin user bind operation, Regular user authentication, Create (add), read (search), update (modify), and delete operations for users and groups"
 
   s.add_development_dependency 'rspec', '~> 0'
-  s.add_development_dependency 'net-ldap', '~> 0'
+  s.add_development_dependency 'net-ldap', '~> 0.16.0'
 
   s.files        = Dir.glob("{lib,vendor}/**/*") + %w(LICENSE README.md)
   s.require_path = 'lib'
